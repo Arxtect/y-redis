@@ -9,12 +9,12 @@ const redisPrefix = env.getConf('redis-prefix') || 'y'
 const postgresUrl = env.getConf('postgres')
 const s3Endpoint = env.getConf('s3-endpoint')
 const checkPermCallbackUrl = env.ensureConf('AUTH_PERM_CALLBACK')
+const bucketName = env.getConf('s3-ydoc-bucket-name') || 'ydocs'
 
 let store
 if (s3Endpoint) {
   console.log('using s3 store')
   const { createS3Storage } = await import('../src/storage/s3.js')
-  const bucketName = 'ydocs'
   store = createS3Storage(bucketName)
   try {
     // make sure the bucket exists
